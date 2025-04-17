@@ -13,6 +13,7 @@ body {
     color: white;
     border: 5px solid black;
     border-radius: 20px;
+    overflow: hidden;
 }
 
 #header div {
@@ -29,30 +30,44 @@ body {
     color: white;
 }
 
-.container1 {
+#Containers {
     display: flex;
-    gap: 50px;
+    gap: 25px;
+    overflow: scroll;
 }
 
-.C1Box {
+
+.Container1Child {
+    width: 250px;
     border: 5px solid black;
     border-radius: 20px;
 }
 
-.SearchBox.C1Box {
-    padding: 10px;
+#SearchArea {
+    height: 100px; 
 }
 
-.C1Box input {
-    border: 3px solid black;
+#SearchSelectDisplay, #WatchWindow {
+    height: 250px;
 }
 
-ul {
-    list-style: none;
-    font-size: large;
-    font-weight: bold;
+#SearchSelectDisplay, #WatchWindow {
+    margin-top: 25px;
 }
 
-li:hover {
-    background-color: white;
+#Container2Flex1 {
+    display: flex;
 }
+
+#Container2 #Container2Flex1 > div {
+    width: 400px;
+    height: 375px;
+    border: 5px solid black;
+    border-radius: 20px;
+}
+
+
+
+
+
+
