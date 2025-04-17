@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: grey;
+}
+
+#header {
+    height: 75px;
+    text-align: center;
+    color: white;
+    border: 5px solid black;
+    border-radius: 20px;
+}
+
+#header div {
+    font-size: 50px;
+    font-weight: bold;
+    padding-top: 4px;
+}
+
+#userinfoHead {
+    margin: 40px;
+    font-size: large;
+    font-weight: 800;
+    text-align: right;
+    color: white;
+}
+
+.container1 {
+    display: flex;
+    gap: 50px;
+}
+
+.C1Box {
+    border: 5px solid black;
+    border-radius: 20px;
+}
+
+.SearchBox.C1Box {
+    padding: 10px;
+}
+
+.C1Box input {
+    border: 3px solid black;
+}
+
+ul {
+    list-style: none;
+    font-size: large;
+    font-weight: bold;
+}
+
+li:hover {
+    background-color: white;
+}
