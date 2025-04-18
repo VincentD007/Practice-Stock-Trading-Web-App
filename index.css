@@ -37,9 +37,9 @@ body {
 #Containers {
     display: flex;
     gap: 25px;
-    overflow: scroll;
+    overflow: visible;
+    justify-content: center;
 }
-
 
 .Container1Child {
     width: 250px;
@@ -57,6 +57,7 @@ body {
 
 #SearchSelectDisplay, #WatchWindow {
     margin-top: 25px;
+    
 }
 
 #Container2Flex1 {
