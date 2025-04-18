@@ -79,6 +79,41 @@ body {
     width: 250px;
 }
 
+#SearchArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#TickerSearchBar > input{
+    border: 4px solid black;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+#TickerSearchResults {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow: scroll;
+    scrollbar-width: none;
+    margin: 5px;
+    list-style: none;
+    padding: 0px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+#TickerSearchResults > li:hover {
+    color: white;
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+    transition: 200ms;
+    transform: scale(1.05);
+}
 
 
 
