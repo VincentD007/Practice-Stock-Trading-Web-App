@@ -8,18 +8,22 @@ body {
 }
 
 #header {
+    display: flex;
+    justify-content: center;
     height: 75px;
-    text-align: center;
     color: white;
     border: 5px solid black;
     border-radius: 20px;
     overflow: hidden;
+
 }
 
-#header div {
-    font-size: 50px;
+#header h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
-    padding-top: 4px;
+    margin: 0px;
 }
 
 #userinfoHead {
@@ -57,15 +61,22 @@ body {
 
 #Container2Flex1 {
     display: flex;
+    gap: 25px;
 }
 
 #Container2 #Container2Flex1 > div {
-    width: 400px;
     height: 375px;
     border: 5px solid black;
     border-radius: 20px;
 }
 
+#PortfolioWindow {
+    width: 700px;
+}
+
+#TopMoversWindow {
+    width: 250px;
+}
 
 
 
