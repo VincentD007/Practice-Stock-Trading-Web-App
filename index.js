@@ -3,9 +3,8 @@ const searchDisplayName = document.getElementById("SelectedCoinName");
 const searchDisplayPrice = document.getElementById("SelectedCoinPrice");
 const searchDisplayBody = document.getElementById("SelectedDisplayBody");
 const tickerSearchBar = document.getElementById("TickerSearchBar").childNodes[1];
-const topCoins = document.querySelectorAll(".TopCoin");
+const topCoins = Array.from(document.querySelectorAll(".TopCoin"));
 var initialLoad = false;
-
 
 const loadData = (fetchindex, dataObj) => {
     if (fetchindex < 500) {
@@ -28,11 +27,18 @@ const loadData = (fetchindex, dataObj) => {
     }
     else {
         localStorage.setItem("CoinData", JSON.stringify(dataObj))
+        updatePage()
         if (!initialLoad) {
             'set intervals'
-            updatePage()
-            setInterval(() => {loadData(0, [])}, 10000)
-            setInterval(updatePage, 8000)
+            for (topCoin of topCoins) {
+                topCoin.addEventListener("click", (eventObj) => {
+                    let ticker = eventObj.currentTarget.children[0].innerHTML;
+                    setSearchInputValue(ticker);
+                    autoSearch(ticker);
+                    displayCoin(ticker);
+                })
+            }
+            setInterval(() => {loadData(0, [])}, 8000)
             initialLoad = true;
         }
     }
