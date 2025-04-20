@@ -1,5 +1,8 @@
 const searchResults = document.getElementById("TickerSearchResults");
-var searchResultIDs = [];
+const searchDisplayName = document.getElementById("SelectedCoinName");
+const searchDisplayPrice = document.getElementById("SelectedCoinPrice");
+const searchDisplayBody = document.getElementById("SelectedDisplayBody");
+const tickerSearchBar = document.getElementById("TickerSearchBar").childNodes[1];
 
 const loadData = (fetchindex, dataObj) => {
     if (fetchindex < 500) {
@@ -24,10 +27,37 @@ const loadData = (fetchindex, dataObj) => {
     }
 }
 
-const autoSearch = (eventObj) => {
-    let input = eventObj.target.value;
+
+const setSearchInputValue = (coinName) => {
+    console.log(coinName)
+    tickerSearchBar.value = coinName;
+    autoSearch(coinName);
+}
+
+
+const displayCoin = (coinName) => {
+    let coinInfo; 
+
+    for (coin of JSON.parse(localStorage.getItem("CoinData"))) {
+        if (coin.symbol === coinName) {
+            coinInfo = coin;
+            break;
+        }
+    }
+    if (!coinInfo) {return};
+
+    searchDisplayBody.style.visibility = "visible"
+    searchDisplayName.innerHTML = coinInfo.name;
+    searchDisplayPrice.innerHTML = coinInfo.price;
+}
+
+
+const autoSearch = (input) => {
     searchResults.innerHTML = ""
-    if (!input) {return}
+    if (!input) {
+        searchDisplayBody.style.visibility = "hidden";
+        return;
+    }
 
     for (coin of JSON.parse(localStorage.getItem("CoinData")).filter((elem) => {
         return elem.symbol.indexOf(input) != -1;
@@ -35,8 +65,13 @@ const autoSearch = (eventObj) => {
         let searchItem = document.createElement("li");
         searchItem.innerText = coin.symbol;
         searchResults.appendChild(searchItem);
+        searchItem.addEventListener("click", eventObject => {
+            setSearchInputValue(eventObject.target.innerText);
+            displayCoin(eventObject.target.innerText);
+        })
     }
 }
 
+
 loadData(0, [])
-document.addEventListener("input", autoSearch)
+document.addEventListener("input", eventObject => {autoSearch(eventObject.target.value)})

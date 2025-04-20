@@ -164,8 +164,13 @@ body {
     transform: scale(1.05);
 }
 
+
 #SelectedDisplayHeader {
     margin: 10px;
+}
+
+#SelectedDisplayBody {
+    visibility: hidden;
 }
 
 #SelectedCoinName {
