@@ -187,7 +187,44 @@ body {
     font-weight: bold;
 }
 
+#BuySell {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.button {
+    border: 3px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 3px;
+    font-size: 15px;
+}
 
+#ActionBuy {
+    background-color: lightgreen;
+}
 
+#ActionSell {
+    background-color: lightcoral;
+}
 
+.button:hover {
+    background-color: grey;
+}
+
+.button:active {
+    transition: 50ms;
+    transform: scale(.90);
+}
+
+#AmntBuySell {
+    font-weight: bold;
+}
+
+#AmntBuySell > input {
+    margin-top: 4px;
+    border: 4px solid black;
+    border-radius: 10px;
+}

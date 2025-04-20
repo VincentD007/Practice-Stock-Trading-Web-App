@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Trader</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
-    <div id="header">
-        <h1>Practice Stock Trader</h1>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stock Trader</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <div id="header">
+            <h1>Practice Stock Trader</h1>
+        </div>
 
         <div class="userinfo">
             <div id="TopCoins">
@@ -62,10 +62,15 @@
                     <div id="SelectedDisplayBody">
                         <h3 id="SelectedCoinName">Bitcoin</h3> 
                         <span id="SelectedCoinPrice">$80,000</span> <span id="SelectedCoinPriceText">Per coin</span>
-                        <div id="SelectedCoinActions">
-                            <div id="BuySellWatch">
-                                <button>Buy</button><button>Sell</button><button>Watch</button>
+                        <div id="BuySell">
+                            <div id="BuySellActions">
+                                <button id="ActionBuy" class="button">Buy</button>
+                                <button id="ActionSell" class="button">Sell</button>
                             </div>
+                            <div id="AmntBuySell">
+                                <span> $ </span><input id="BuySellAmntInput" type="number" min="0" step="0.01"  placeholder="How much to buy">
+                            </div>
+                            <button id="AddToWatchBtn" class="button">Add to watchlist</button>
                         </div>
                     </div>
                 </div>
@@ -100,6 +105,6 @@
             </div>
 
         </div>
-
-</body>
+        <script src="index.js"></script>
+    </body>
 </html>
