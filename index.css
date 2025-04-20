@@ -38,12 +38,12 @@ body {
 #TopCoins {
     display: flex;
     gap:50px;
-    margin-left: calc(50% - 230px);
+    margin-left: calc(50% - 260px);
 }
 
 
 .TopCoin {
-    width: 120px;
+    width: 140px;
     height: 100px;
     border: 2px solid black;
     border-radius: 10px;
@@ -59,13 +59,14 @@ body {
 .TopCoinTicker {
     margin: 5px;
     margin-bottom: 0px;
+    color: gold;
 }
 
 .TopCoinPrice {
     margin: 5px;
     margin-top: 0px;
     margin-left: 15px;
-    color: lightgrey;
+    color: lightgreen;
 }
 
 .TopCoinSupplyLabel {

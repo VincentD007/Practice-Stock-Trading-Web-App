@@ -3,6 +3,9 @@ const searchDisplayName = document.getElementById("SelectedCoinName");
 const searchDisplayPrice = document.getElementById("SelectedCoinPrice");
 const searchDisplayBody = document.getElementById("SelectedDisplayBody");
 const tickerSearchBar = document.getElementById("TickerSearchBar").childNodes[1];
+const topCoins = document.querySelectorAll(".TopCoin");
+var initialLoad = false;
+
 
 const loadData = (fetchindex, dataObj) => {
     if (fetchindex < 500) {
@@ -15,7 +18,8 @@ const loadData = (fetchindex, dataObj) => {
                     name: coinObj.name,
                     symbol: coinObj.symbol,
                     id: coinObj.id,
-                    price: coinObj.price_usd
+                    price: coinObj.price_usd,
+                    MarketCap: coinObj.market_cap_usd
                 });
             }
                 loadData(fetchindex + 100, dataObj)
@@ -24,6 +28,24 @@ const loadData = (fetchindex, dataObj) => {
     }
     else {
         localStorage.setItem("CoinData", JSON.stringify(dataObj))
+        if (!initialLoad) {
+            'set intervals'
+            updatePage()
+            initialLoad = true;
+        }
+    }
+}
+
+
+const updatePage = () => {
+    let topCoinsData = JSON.parse(localStorage.getItem("CoinData")).filter(elem => {
+        return (0 < elem.rank) && (elem.rank < 4);
+    })
+    for (coin of topCoinsData) {
+        let topcoin = topCoins[coin.rank -1];
+        topcoin.children[0].innerText = coin.symbol;
+        topcoin.children[1].innerHTML = coin.price;
+        topcoin.children[3].innerHTML = coin.MarketCap;
     }
 }
 
@@ -74,4 +96,4 @@ const autoSearch = (input) => {
 
 
 loadData(0, [])
-document.addEventListener("input", eventObject => {autoSearch(eventObject.target.value)})
+tickerSearchBar.addEventListener("input", eventObject => {autoSearch(eventObject.target.value)})
