@@ -31,6 +31,8 @@ const loadData = (fetchindex, dataObj) => {
         if (!initialLoad) {
             'set intervals'
             updatePage()
+            setInterval(() => {loadData(0, [])}, 10000)
+            setInterval(updatePage, 8000)
             initialLoad = true;
         }
     }
@@ -41,17 +43,21 @@ const updatePage = () => {
     let topCoinsData = JSON.parse(localStorage.getItem("CoinData")).filter(elem => {
         return (0 < elem.rank) && (elem.rank < 4);
     })
+
     for (coin of topCoinsData) {
         let topcoin = topCoins[coin.rank -1];
         topcoin.children[0].innerText = coin.symbol;
         topcoin.children[1].innerHTML = coin.price;
         topcoin.children[3].innerHTML = coin.MarketCap;
     }
+
+    if (searchDisplayBody.style.visibility == "visible") {
+        displayCoin(searchDisplayName.innerHTML);
+    }
 }
 
 
 const setSearchInputValue = (coinName) => {
-    console.log(coinName)
     tickerSearchBar.value = coinName;
     autoSearch(coinName);
 }
@@ -61,7 +67,7 @@ const displayCoin = (coinName) => {
     let coinInfo; 
 
     for (coin of JSON.parse(localStorage.getItem("CoinData"))) {
-        if (coin.symbol === coinName) {
+        if (coin.symbol === coinName || coin.name === coinName) {
             coinInfo = coin;
             break;
         }
