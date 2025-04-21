@@ -47,11 +47,15 @@ const updateMonies = () => {
     for (coin in wallet.coins) {
         for (coinData of JSON.parse(localStorage.getItem("CoinData"))) {
             if (coin == coinData.symbol) {
-                securities += Number((wallet.coins[coin] * coinData.price).toFixed(2));
+                securities += wallet.coins[coin] * coinData.price;
             }
         }
     }
-    console.log("Securities", securities)
+
+    securities = Number(securities.toFixed(2))
+    monies.children[1].children[1].innerText = `$${liquid + securities}`
+    monies.children[2].children[1].innerText = `$${securities}`
+    monies.children[3].children[1].innerText = `$${liquid}`
 }
 
 
