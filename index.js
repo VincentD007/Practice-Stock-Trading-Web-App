@@ -6,6 +6,7 @@ const tickerSearchBar = document.getElementById("TickerSearchBar").childNodes[1]
 const topCoins = Array.from(document.querySelectorAll(".TopCoin"));
 var initialLoad = false;
 
+
 const loadData = (fetchindex, dataObj) => {
     if (fetchindex < 500) {
         fetch(`https://api.coinlore.net/api/tickers?start=${fetchindex}&limit=100`)
