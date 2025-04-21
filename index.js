@@ -64,6 +64,7 @@ const updatePage = () => {
                 displayCoin(ticker);
             })
         }
+
         let wallet = JSON.parse(localStorage.getItem("Wallet"))
         for (key in wallet.coins) {
             let coinData = JSON.parse(localStorage.getItem("CoinData")).filter((elem) => {
@@ -75,8 +76,13 @@ const updatePage = () => {
             let coinHolding = holdingsItem.cloneNode(true);
             coinHolding.children[0].children[0].innerText = key;
             coinHolding.children[0].children[1].innerText = wallet.coins[key];
-            console.log(coinHolding)
             UserShares.appendChild(coinHolding);
+            coinHolding.addEventListener("click", (eventObj) => {
+                let ticker = eventObj.currentTarget.children[0].children[0].innerText
+                setSearchInputValue(ticker);
+                autoSearch(ticker);
+                displayCoin(ticker);
+            })
         }
         setInterval(() => {loadData(0, [])}, 8000)
         initialLoad = true;
