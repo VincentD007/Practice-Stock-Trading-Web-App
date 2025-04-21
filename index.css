@@ -327,3 +327,13 @@ body {
     width: 50px;
     color: gold;
 }
+
+#SharesList li > div > div span:nth-child(1) {
+    color: whitesmoke;
+    font-weight: 500;
+}
+
+#SharesList li > div > div span:nth-child(2) {
+    color: lightgreen;
+    font-weight: 500;
+}

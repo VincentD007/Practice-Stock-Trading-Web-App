@@ -5,6 +5,13 @@ const searchDisplayBody = document.getElementById("SelectedDisplayBody");
 const tickerSearchBar = document.getElementById("TickerSearchBar").childNodes[1];
 const topCoins = Array.from(document.querySelectorAll(".TopCoin"));
 const UserShares = document.getElementById("SharesList");
+const BuyButton = document.getElementById("ActionBuy");
+const SellButton = document.getElementById("ActionSell");
+const BuySellInput = document.getElementById("AmntBuySell").children[1]
+const UsrTotal =  document.getElementById("Monies").children[1].children[1]
+const UsrSecurities = document.getElementById("Monies").children[2].children[1]
+const UsrLiquid = document.getElementById("Monies").children[3].children[1]
+const HoldingsList = document.getElementById("Holdings").children[1]
 var initialLoad = false;
 let holdingsItem = document.createElement("li");
 holdingsItem.innerHTML = "<div><h4></h4><div></div></div>";
@@ -38,7 +45,6 @@ const loadData = (fetchindex, dataObj) => {
 
 
 const updateMonies = () => {
-    let monies = document.getElementById("Monies")
     let wallet = JSON.parse(localStorage.getItem("Wallet"))
     let liquid = 0.00;
     let securities = 0.00;
@@ -53,9 +59,9 @@ const updateMonies = () => {
     }
 
     securities = Number(securities.toFixed(2))
-    monies.children[1].children[1].innerText = `$${liquid + securities}`
-    monies.children[2].children[1].innerText = `$${securities}`
-    monies.children[3].children[1].innerText = `$${liquid}`
+    UsrTotal.innerText = `$${Math.round(liquid + securities)}`
+    UsrSecurities.innerText = `$${securities}`
+    UsrLiquid.innerText = `$${liquid}`
 }
 
 
@@ -77,6 +83,28 @@ const updatePage = () => {
 
     updateMonies()
     
+    HoldingsList.innerHTML = "";
+    let wallet = JSON.parse(localStorage.getItem("Wallet"));
+    for (key in wallet.coins) {
+        let coinData = JSON.parse(localStorage.getItem("CoinData")).filter((elem) => {
+            return elem.symbol === key;
+        })[0]
+
+        if(!coinData) {break;}
+
+        let coinHolding = holdingsItem.cloneNode(true);
+        let coinQuantity = `<span>${wallet.coins[key]}</span> or <span>$${Number((coinData.price * wallet.coins[key])).toFixed(2)}</span>`
+        coinHolding.children[0].children[0].innerText = key;
+        coinHolding.children[0].children[1].innerHTML = coinQuantity;
+        UserShares.appendChild(coinHolding);
+        coinHolding.addEventListener("click", (eventObj) => {
+            let ticker = eventObj.currentTarget.children[0].children[0].innerText
+            setSearchInputValue(ticker);
+            autoSearch(ticker);
+            displayCoin(ticker);
+        })
+    }
+
     if (!initialLoad) {
         'set intervals'
         for (topCoin of topCoins) {
@@ -88,25 +116,6 @@ const updatePage = () => {
             })
         }
 
-        let wallet = JSON.parse(localStorage.getItem("Wallet"))
-        for (key in wallet.coins) {
-            let coinData = JSON.parse(localStorage.getItem("CoinData")).filter((elem) => {
-                elem.symbol == key;
-            })
-
-            if(!coinData) {break;}
-            
-            let coinHolding = holdingsItem.cloneNode(true);
-            coinHolding.children[0].children[0].innerText = key;
-            coinHolding.children[0].children[1].innerText = wallet.coins[key];
-            UserShares.appendChild(coinHolding);
-            coinHolding.addEventListener("click", (eventObj) => {
-                let ticker = eventObj.currentTarget.children[0].children[0].innerText
-                setSearchInputValue(ticker);
-                autoSearch(ticker);
-                displayCoin(ticker);
-            })
-        }
         setInterval(() => {loadData(0, [])}, 8000)
         initialLoad = true;
     }
@@ -164,9 +173,53 @@ if (localStorage.getItem("Wallet") == null) {
     localStorage.setItem("Wallet", JSON.stringify({
         coins: {
             BTC: 0.05,
-            ETH: 3.00
+            ETH: 3.05
         },
-        money: 10000.00
+        money: 100000.00
     }))
 }
 
+BuyButton.addEventListener("click", eventObj => {
+    if (!BuySellInput.value) {
+        alert("You didint input an amount!")
+        return
+    }
+
+    let addCoinAmnt;
+    let wallet = JSON.parse(localStorage.getItem("Wallet"))
+    let coinToBuy = JSON.parse(localStorage.getItem("CoinData")).filter(elem => {
+        return searchDisplayName.innerText === elem.name;
+    })[0]
+
+
+    if (wallet.money == 0) {
+        alert("You have no money!");
+        return;
+    }
+    else if (wallet.money <= Number(BuySellInput.value)) {
+        addCoinAmnt = Number(wallet.money) / coinToBuy.price;
+        wallet.money = 0.00
+    }
+    else {
+        addCoinAmnt = Number(BuySellInput.value) / coinToBuy.price;
+        wallet.money -= Number(BuySellInput.value);
+    }
+
+
+    if (!wallet.coins[coinToBuy.symbol]) {
+        wallet.coins[coinToBuy.symbol] = Number(addCoinAmnt.toFixed(5));
+    }
+    else {
+        wallet.coins[coinToBuy.symbol] += addCoinAmnt;
+        wallet.coins[coinToBuy.symbol] = Number(wallet.coins[coinToBuy.symbol].toFixed(5))
+    }
+
+    localStorage.setItem("Wallet", JSON.stringify(wallet));
+    updateMonies()
+    updatePage()
+
+})
+
+SellButton.addEventListener("click", eventObj => {
+
+})
