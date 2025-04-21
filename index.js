@@ -37,6 +37,24 @@ const loadData = (fetchindex, dataObj) => {
 }
 
 
+const updateMonies = () => {
+    let monies = document.getElementById("Monies")
+    let wallet = JSON.parse(localStorage.getItem("Wallet"))
+    let liquid = 0.00;
+    let securities = 0.00;
+    
+    liquid += wallet.money
+    for (coin in wallet.coins) {
+        for (coinData of JSON.parse(localStorage.getItem("CoinData"))) {
+            if (coin == coinData.symbol) {
+                securities += Number((wallet.coins[coin] * coinData.price).toFixed(2));
+            }
+        }
+    }
+    console.log("Securities", securities)
+}
+
+
 const updatePage = () => {
     let topCoinsData = JSON.parse(localStorage.getItem("CoinData")).filter(elem => {
         return (0 < elem.rank) && (elem.rank < 4);
@@ -53,6 +71,7 @@ const updatePage = () => {
         displayCoin(searchDisplayName.innerHTML);
     }
 
+    updateMonies()
     
     if (!initialLoad) {
         'set intervals'
@@ -89,10 +108,6 @@ const updatePage = () => {
     }
 }
 
-const loadPortfolio = () => {
-    let userCoins = JSON.parse(localStorage.getItem("Wallet"));
-
-}
 
 const setSearchInputValue = (coinName) => {
     tickerSearchBar.value = coinName;
@@ -144,10 +159,10 @@ tickerSearchBar.addEventListener("input", eventObject => {autoSearch(eventObject
 if (localStorage.getItem("Wallet") == null) {
     localStorage.setItem("Wallet", JSON.stringify({
         coins: {
-            BTC: 0.000005,
-            ETH: 0.0010
+            BTC: 0.05,
+            ETH: 3.00
         },
-        Money: 0.00
+        money: 10000.00
     }))
 }
 
