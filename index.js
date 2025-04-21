@@ -4,7 +4,11 @@ const searchDisplayPrice = document.getElementById("SelectedCoinPrice");
 const searchDisplayBody = document.getElementById("SelectedDisplayBody");
 const tickerSearchBar = document.getElementById("TickerSearchBar").childNodes[1];
 const topCoins = Array.from(document.querySelectorAll(".TopCoin"));
+const UserShares = document.getElementById("SharesList");
 var initialLoad = false;
+let holdingsItem = document.createElement("li");
+holdingsItem.innerHTML = "<div><h4></h4><div></div></div>";
+
 
 
 const loadData = (fetchindex, dataObj) => {
@@ -29,19 +33,6 @@ const loadData = (fetchindex, dataObj) => {
     else {
         localStorage.setItem("CoinData", JSON.stringify(dataObj))
         updatePage()
-        if (!initialLoad) {
-            'set intervals'
-            for (topCoin of topCoins) {
-                topCoin.addEventListener("click", (eventObj) => {
-                    let ticker = eventObj.currentTarget.children[0].innerHTML;
-                    setSearchInputValue(ticker);
-                    autoSearch(ticker);
-                    displayCoin(ticker);
-                })
-            }
-            setInterval(() => {loadData(0, [])}, 8000)
-            initialLoad = true;
-        }
     }
 }
 
@@ -61,8 +52,41 @@ const updatePage = () => {
     if (searchDisplayBody.style.visibility == "visible") {
         displayCoin(searchDisplayName.innerHTML);
     }
+
+    
+    if (!initialLoad) {
+        'set intervals'
+        for (topCoin of topCoins) {
+            topCoin.addEventListener("click", (eventObj) => {
+                let ticker = eventObj.currentTarget.children[0].innerHTML;
+                setSearchInputValue(ticker);
+                autoSearch(ticker);
+                displayCoin(ticker);
+            })
+        }
+        let wallet = JSON.parse(localStorage.getItem("Wallet"))
+        for (key in wallet.coins) {
+            let coinData = JSON.parse(localStorage.getItem("CoinData")).filter((elem) => {
+                elem.symbol == key;
+            })
+
+            if(!coinData) {break;}
+            
+            let coinHolding = holdingsItem.cloneNode(true);
+            coinHolding.children[0].children[0].innerText = key;
+            coinHolding.children[0].children[1].innerText = wallet.coins[key];
+            console.log(coinHolding)
+            UserShares.appendChild(coinHolding);
+        }
+        setInterval(() => {loadData(0, [])}, 8000)
+        initialLoad = true;
+    }
 }
 
+const loadPortfolio = () => {
+    let userCoins = JSON.parse(localStorage.getItem("Wallet"));
+
+}
 
 const setSearchInputValue = (coinName) => {
     tickerSearchBar.value = coinName;
@@ -110,3 +134,14 @@ const autoSearch = (input) => {
 
 loadData(0, [])
 tickerSearchBar.addEventListener("input", eventObject => {autoSearch(eventObject.target.value)})
+
+if (localStorage.getItem("Wallet") == null) {
+    localStorage.setItem("Wallet", JSON.stringify({
+        coins: {
+            BTC: 0.000005,
+            ETH: 0.0010
+        },
+        Money: 0.00
+    }))
+}
+

@@ -286,7 +286,7 @@ body {
 
 #SharesList {
     width: 99%;
-    height: 220px;
+    height: 215px;
     list-style: none;
     padding: 0px;
     overflow-y: scroll;
@@ -294,18 +294,36 @@ body {
 }
 
 #SharesList li {
+    display: flex;
     height: 50px;
     margin-bottom: 2px;
     border: 3px solid black;
     border-radius: 5px;
     cursor: pointer;
+    background-color: dimgray;
 }
 
 #SharesList li:hover {
-    background-color: darkslategrey;
+    background-color: grey;
 }
 
 #SharesList li:active {
     transform: scale(.95);
-    transition: 100ms;
+    transition: 50ms;
+}
+
+#SharesList li > div {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+#SharesList h4{
+    text-align: center;
+    margin: 0px;
+    width: 50px;
+    color: gold;
 }
