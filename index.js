@@ -175,28 +175,27 @@ if (localStorage.getItem("Wallet") == null) {
             BTC: 0.05,
             ETH: 3.05
         },
-        money: 100000.00
+        money: 150000.00
     }))
 }
 
 BuyButton.addEventListener("click", eventObj => {
+    let wallet = JSON.parse(localStorage.getItem("Wallet"))
     if (!BuySellInput.value) {
         alert("You didint input an amount!")
         return
     }
+    else if (wallet.money == 0) {
+        alert("You have no money!");
+        return;
+    }
 
     let addCoinAmnt;
-    let wallet = JSON.parse(localStorage.getItem("Wallet"))
     let coinToBuy = JSON.parse(localStorage.getItem("CoinData")).filter(elem => {
         return searchDisplayName.innerText === elem.name;
     })[0]
 
-
-    if (wallet.money == 0) {
-        alert("You have no money!");
-        return;
-    }
-    else if (wallet.money <= Number(BuySellInput.value)) {
+    if (wallet.money <= Number(BuySellInput.value)) {
         addCoinAmnt = Number(wallet.money) / coinToBuy.price;
         wallet.money = 0.00
     }
@@ -204,7 +203,6 @@ BuyButton.addEventListener("click", eventObj => {
         addCoinAmnt = Number(BuySellInput.value) / coinToBuy.price;
         wallet.money -= Number(BuySellInput.value);
     }
-
 
     if (!wallet.coins[coinToBuy.symbol]) {
         wallet.coins[coinToBuy.symbol] = Number(addCoinAmnt.toFixed(5));
