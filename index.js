@@ -219,5 +219,18 @@ BuyButton.addEventListener("click", eventObj => {
 })
 
 SellButton.addEventListener("click", eventObj => {
+    let wallet = JSON.parse(localStorage.getItem("Wallet"))
+    let coinToSell = JSON.parse(localStorage.getItem("CoinData")).filter(elem => {
+        return searchDisplayName.innerText === elem.name;
+    })[0]
 
+    if (!BuySellInput.value) {
+        alert("You didint input an amount!")
+        return
+    }
+    else if (!wallet.coins[coinToSell.symbol]) {
+        alert(`You dont have any ${coinToSell.name} to sell!`)
+    }
+
+    
 })
